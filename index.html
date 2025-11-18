@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoCall - P2P видеозвонки</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">📞 Enigma</h1>
+            <div class="header-info">
+                <span id="connectionStatus">Не подключено</span>
+                <span id="userCount">Участники: 0/10</span>
+                <span id="roomIdDisplay"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="main">
+        <!-- Экран выбора комнаты -->
+        <div class="room-selection" id="roomSelection">
+            <div class="room-card">
+                <h2>🎯 Создать или присоединиться к звонку</h2>
+                <div class="input-group">
+                    <input type="text" id="roomIdInput" placeholder="ID комнаты">
+                    <input type="text" id="userNameInput" placeholder="Ваше имя" value="Участник">
+                </div>
+                <div class="button-group">
+                    <button id="createRoomBtn" class="btn primary">👑 Создать комнату</button>
+                    <button id="joinRoomBtn" class="btn secondary">✅ Присоединиться</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Интерфейс звонка -->
+        <div class="call-interface hidden" id="callInterface">
+            <div class="call-layout">
+                <!-- Левая колонка: видео и админ-панель -->
+                <div class="video-section">
+                    <!-- АДМИН-ПАНЕЛЬ (только для владельца/админа) -->
+                    <div class="admin-panel hidden" id="adminPanel">
+                        <h3>👑 Панель управления</h3>
+                        <div class="admin-controls">
+                            <button id="muteAllBtn" class="admin-btn">🔇 Приглушить всех</button>
+                            <button id="promoteAdminBtn" class="admin-btn">⭐ Назначить админа</button>
+                            <button id="lockRoomBtn" class="admin-btn">🔒 Закрыть комнату</button>
+                        </div>
+                    </div>
+
+                    <!-- Видео контейнер -->
+                    <div class="video-container" id="videoContainer">
+                        <div class="local-video-wrapper">
+                            <video id="localVideo" autoplay muted playsinline></video>
+                            <div class="video-label">Вы</div>
+                        </div>
+                        <!-- Сюда добавляются видео других участников -->
+                    </div>
+                    
+                    <!-- Панель управления -->
+                    <div class="control-panel">
+                        <button id="toggleMic" class="control-btn active" title="Микрофон">🎤</button>
+                        <button id="toggleCamera" class="control-btn active" title="Камера">📹</button>
+                        <button id="shareScreen" class="control-btn" title="Демонстрация экрана">🖥️</button>
+                        <button id="settingsBtn" class="control-btn" title="Настройки">⚙️</button>
+                        <button id="hangupBtn" class="control-btn danger" title="Завершить звонок">⏹️</button>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: участники и чат -->
+                <div class="sidebar">
+                    <!-- Список участников -->
+                    <aside class="user-list">
+                        <h3>Участники <span id="usersCount">(0)</span></h3>
+                        <div class="users-container" id="usersContainer">
+                            <!-- Сюда добавляются участники -->
+                        </div>
+                    </aside>
+
+                    <!-- ЧАТ -->
+                    <div class="chat-container" id="chatContainer">
+                        <div class="chat-header">
+                            <h3>💬 Чат</h3>
+                            <button id="toggleChatBtn" class="chat-toggle">−</button>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Сообщения чата -->
+                            <div class="chat-welcome">
+                                💡 Чат защищен сквозным шифрованием
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" id="chatInput" placeholder="Введите сообщение...">
+                            <button id="sendMessageBtn">📨</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальные окна -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>⚙️ Настройки устройств</h2>
+            <div class="setting-group">
+                <label>Камера:</label>
+                <select id="cameraSelect"></select>
+            </div>
+            <div class="setting-group">
+                <label>Микрофон:</label>
+                <select id="micSelect"></select>
+            </div>
+            <button id="closeSettings" class="modal-close">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно назначения админа -->
+    <div id="promoteModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>⭐ Назначить администратора</h2>
+            <div class="user-list-modal" id="userListModal">
+                <!-- Список пользователей для назначения -->
+            </div>
+            <button id="closePromoteModal" class="modal-close">Отмена</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
